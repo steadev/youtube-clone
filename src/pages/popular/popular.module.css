@@ -1,0 +1,20 @@
+.list {
+  display: grid;
+  gap: 1rem;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+}
+
+.thumbnail {
+  width: 100%;
+}
+.thumbnail img {
+  width: 100%;
+}
+.title {
+}
+.publishedAt {
+}
