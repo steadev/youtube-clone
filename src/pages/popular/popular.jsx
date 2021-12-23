@@ -1,33 +1,18 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import SearchBar from "../../components/search-bar";
-import { environment } from "../../environment/environment.js";
 import styles from "./popular.module.css";
 
-const Popular = () => {
+const Popular = ({ youtube }) => {
   const [videos, setVideos] = useState([]);
-  let nextPageToken = undefined;
 
-  const getPopularList = (pageToken) => {
-    let getUrl = `${environment.youtubeApiUrl}/videos?part=snippet&maxResults=25&regionCode=kr&chart=mostPopular&key=${environment.youtubeApiKey}`;
-    if (pageToken) {
-      getUrl += `&pageToken=${pageToken}`;
-    }
-    axios
-      .get(getUrl)
-      .then((res) => {
-        console.log(res);
-        if (res?.data) {
-          nextPageToken = res.data.nextPageToken;
-          setVideos([...videos, ...res.data.items]);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const getPopularList = () => {
+    youtube
+      .mostPopular() //
+      .then((res) => setVideos([...videos, ...res]));
   };
   useEffect(() => {
-    getPopularList(nextPageToken);
+    getPopularList();
   }, []);
   return (
     <>
@@ -48,17 +33,29 @@ const Popular = () => {
 };
 
 const VideoListItem = (props) => {
+  const navigate = useNavigate();
   const { data } = props;
   const { snippet } = data;
+  const handleClick = () => {
+    navigate(`/${data.id}`);
+  };
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={handleClick}>
       <div className={styles.thumbnail}>
         <img src={snippet.thumbnails.high.url} alt="thumbnail" />
       </div>
-      <div className={styles.title}>{snippet.title}</div>
-      <div className={styles.publishedAt}>{snippet.publishedAt}</div>
+      <h3>
+        <div className={styles.title}>{snippet.title}</div>
+      </h3>
+      <div className={styles.channelTitle}>{snippet.channelTitle}</div>
+      <div className={styles.publishedAt}>{getDate(snippet.publishedAt)}</div>
     </div>
   );
+};
+
+const getDate = (data) => {
+  const date = new Date(data);
+  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 };
 
 export default Popular;
