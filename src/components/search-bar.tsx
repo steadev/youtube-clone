@@ -1,6 +1,9 @@
+import classNames from "classnames";
 import React from "react";
 import logoIcon from "../assets/icons/youtube-logo.png";
-import styles from "./search-bar.module.css";
+import styles from "./search-bar.module.scss";
+
+const cx = classNames.bind(styles);
 
 const SearchBar = () => {
   return (
@@ -10,7 +13,7 @@ const SearchBar = () => {
       </div>
       <input type="text" />
       <button>
-        <i className={`fa fa-search ${styles.searchIcon}`}></i>
+        <i className={cx("fa", "fa-search", "searchIcon")}></i>
       </button>
     </div>
   );

@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../../components/search-bar";
-import styles from "./popular.module.css";
+import { Youtube } from "../../services/youtube";
+import styles from "./popular.module.scss";
 
-const Popular = ({ youtube }) => {
-  const [videos, setVideos] = useState([]);
+type PopularProps = {
+  youtube: Youtube;
+};
+
+type VideoListItemProps = {
+  data: any;
+};
+
+const Popular = ({ youtube }: PopularProps) => {
+  const [videos, setVideos] = useState<any>([]);
 
   const getPopularList = () => {
     youtube
@@ -18,7 +27,7 @@ const Popular = ({ youtube }) => {
     <>
       <SearchBar />
       <div className={styles.list}>
-        {videos.map((item) => {
+        {videos.map((item: any) => {
           return (
             <VideoListItem
               key={item.id}
@@ -32,7 +41,9 @@ const Popular = ({ youtube }) => {
   );
 };
 
-const VideoListItem = (props) => {
+const VideoListItem = (
+  props: VideoListItemProps & React.HTMLAttributes<HTMLDivElement>
+) => {
   const navigate = useNavigate();
   const { data } = props;
   const { snippet } = data;
@@ -53,7 +64,7 @@ const VideoListItem = (props) => {
   );
 };
 
-const getDate = (data) => {
+const getDate = (data: string) => {
   const date = new Date(data);
   return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 };
