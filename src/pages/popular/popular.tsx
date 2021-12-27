@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchBar from "../../components/search-bar";
 import { Youtube } from "../../services/youtube";
 import styles from "./popular.module.scss";
 
@@ -10,6 +9,7 @@ type PopularProps = {
 
 type VideoListItemProps = {
   data: any;
+  youtube: Youtube;
 };
 
 const Popular = ({ youtube }: PopularProps) => {
@@ -25,7 +25,6 @@ const Popular = ({ youtube }: PopularProps) => {
   }, []);
   return (
     <>
-      <SearchBar />
       <div className={styles.list}>
         {videos.map((item: any) => {
           return (
@@ -33,6 +32,7 @@ const Popular = ({ youtube }: PopularProps) => {
               key={item.id}
               className={styles.item}
               data={item}
+              youtube={youtube}
             ></VideoListItem>
           );
         })}
@@ -45,7 +45,7 @@ const VideoListItem = (
   props: VideoListItemProps & React.HTMLAttributes<HTMLDivElement>
 ) => {
   const navigate = useNavigate();
-  const { data } = props;
+  const { data, youtube } = props;
   const { snippet } = data;
   const handleClick = () => {
     navigate(`/${data.id}`);
@@ -59,14 +59,11 @@ const VideoListItem = (
         <div className={styles.title}>{snippet.title}</div>
       </h3>
       <div className={styles.channelTitle}>{snippet.channelTitle}</div>
-      <div className={styles.publishedAt}>{getDate(snippet.publishedAt)}</div>
+      <div className={styles.publishedAt}>
+        {youtube.getDate(snippet.publishedAt)}
+      </div>
     </div>
   );
-};
-
-const getDate = (data: string) => {
-  const date = new Date(data);
-  return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
 };
 
 export default Popular;

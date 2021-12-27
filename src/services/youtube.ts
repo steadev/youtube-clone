@@ -1,10 +1,8 @@
 import axios from "axios";
 
 export class Youtube {
-  private key;
   private youtube;
   constructor(key: string) {
-    this.key = key;
     this.youtube = axios.create({
       baseURL: "https://www.googleapis.com/youtube/v3",
       params: { key },
@@ -36,5 +34,10 @@ export class Youtube {
       ...item,
       id: item.id.videoId,
     }));
+  }
+
+  getDate(data: string): string {
+    const date = new Date(data);
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
   }
 }
