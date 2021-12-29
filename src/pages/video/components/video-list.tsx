@@ -29,7 +29,6 @@ export const VideoList = ({ youtube }: VideoListProps) => {
 };
 
 const VideoListItem = ({ video: { snippet }, youtube }: any) => {
-  console.log(snippet);
   return (
     <div className={styles.item}>
       <div className={styles.thumbnail}>

@@ -7,5 +7,13 @@ interface VideoPlayerProps {
 export const VideoPlayer = ({ id }: VideoPlayerProps) => {
   const origin = `http://localhost:3000`;
   const src = `http://www.youtube.com/embed/${id}?enablejsapi=1&origin=${origin}`;
-  return <iframe id="player" width="640" height="360" src={src}></iframe>;
+  return (
+    <iframe
+      id="player"
+      style={{ marginRight: "2rem" }}
+      width="640"
+      height="360"
+      src={src}
+    ></iframe>
+  );
 };
