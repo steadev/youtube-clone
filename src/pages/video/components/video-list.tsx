@@ -34,12 +34,14 @@ const VideoListItem = ({ video: { snippet }, youtube }: any) => {
       <div className={styles.thumbnail}>
         <img src={snippet.thumbnails.high.url} alt="thumbnail" />
       </div>
-      <h3>
-        <div className={styles.title}>{snippet.title}</div>
-      </h3>
-      <div className={styles.channelTitle}>{snippet.channelTitle}</div>
-      <div className={styles.publishedAt}>
-        {youtube.getDate(snippet.publishedAt)}
+      <div className={styles.content}>
+        <h3>
+          <div className={styles.title}>{snippet.title}</div>
+        </h3>
+        <div className={styles.channelTitle}>{snippet.channelTitle}</div>
+        <div className={styles.publishedAt}>
+          {youtube.getDate(snippet.publishedAt)}
+        </div>
       </div>
     </div>
   );

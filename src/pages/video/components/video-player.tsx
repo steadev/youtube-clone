@@ -11,8 +11,8 @@ export const VideoPlayer = ({ id }: VideoPlayerProps) => {
     <iframe
       id="player"
       style={{ marginRight: "2rem" }}
-      width="640"
-      height="360"
+      width="1280"
+      height="680"
       src={src}
     ></iframe>
   );

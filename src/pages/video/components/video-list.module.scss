@@ -2,10 +2,11 @@
 }
 
 .item {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
   cursor: pointer;
-  max-width: 200px;
+  max-width: 400px;
+  min-width: 300px;
 }
 
 .thumbnail {
@@ -14,29 +15,32 @@
 .thumbnail img {
   width: 100%;
 }
+.content {
+  margin-left: 4px;
 
-.title {
-  font-size: 1.4rem;
-  line-height: 2rem;
-  font-weight: 500;
-  max-height: 4rem;
-  overflow: hidden;
-  display: block;
-  -webkit-line-clamp: 2;
-  display: box;
-  -webkit-box-orient: vertical;
-  text-overflow: ellipsis;
-  white-space: normal;
-}
+  .title {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    font-weight: 500;
+    max-height: 4rem;
+    overflow: hidden;
+    display: block;
+    -webkit-line-clamp: 2;
+    display: box;
+    -webkit-box-orient: vertical;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
 
-.channelTitle {
-  font-size: 1.2rem;
-  line-height: 1.8rem;
-  font-weight: 400;
-}
+  .channelTitle {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    font-weight: 400;
+  }
 
-.publishedAt {
-  font-size: 1.2rem;
-  line-height: 1.8rem;
-  font-weight: 400;
+  .publishedAt {
+    font-size: 1.2rem;
+    line-height: 1.8rem;
+    font-weight: 400;
+  }
 }
