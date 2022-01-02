@@ -11,7 +11,7 @@ const youtube = new Youtube(process.env.REACT_APP_YOUTUBE_API_KEY);
 const App = () => {
   return (
     <BrowserRouter>
-      <SearchBar></SearchBar>
+      <SearchBar youtube={youtube}></SearchBar>
       <Routes>
         <Route path="/" element={<Popular youtube={youtube} />}></Route>
         <Route path=":id" element={<Video youtube={youtube} />}></Route>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Youtube } from "../../../services/youtube";
 import styles from "./video-list.module.scss";
 
@@ -22,15 +23,27 @@ export const VideoList = ({ youtube }: VideoListProps) => {
   return (
     <div className={styles.videoList}>
       {videos.map((video: any) => {
-        return <VideoListItem video={video} youtube={youtube}></VideoListItem>;
+        return (
+          <VideoListItem
+            key={video.id}
+            video={video}
+            youtube={youtube}
+          ></VideoListItem>
+        );
       })}
     </div>
   );
 };
 
-const VideoListItem = ({ video: { snippet }, youtube }: any) => {
+const VideoListItem = ({ video, video: { snippet }, youtube }: any) => {
+  const navigate = useNavigate();
+  const handleOnClick = () => {
+    if (video.id) {
+      navigate(`/${video.id}`);
+    }
+  };
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={handleOnClick}>
       <div className={styles.thumbnail}>
         <img src={snippet.thumbnails.high.url} alt="thumbnail" />
       </div>

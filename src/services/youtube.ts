@@ -30,7 +30,7 @@ export class Youtube {
         q: query,
       },
     });
-    return response?.items.map((item: any) => ({
+    return response?.data?.items.map((item: any) => ({
       ...item,
       id: item.id.videoId,
     }));
