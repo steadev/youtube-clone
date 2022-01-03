@@ -16,12 +16,16 @@ export const VideoList = ({ youtube }: VideoListProps) => {
       .then((res) => setVideos([...videos, ...res]));
   };
 
+  const onScroll = (event: any) => {
+    console.log(event);
+  };
+
   useEffect(() => {
     getPopularList();
   }, []);
 
   return (
-    <div className={styles.videoList}>
+    <div className={styles.videoList} onScroll={onScroll}>
       {videos.map((video: any) => {
         return (
           <VideoListItem

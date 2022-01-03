@@ -20,12 +20,17 @@ const Popular = ({ youtube }: PopularProps) => {
       .mostPopular() //
       .then((res) => setVideos([...videos, ...res]));
   };
+
+  const onScroll = (event: any) => {
+    console.log(event);
+  };
+
   useEffect(() => {
     getPopularList();
   }, []);
   return (
     <>
-      <div className={styles.list}>
+      <div className={styles.list} onScroll={onScroll}>
         {videos.map((item: any) => {
           return (
             <VideoListItem
