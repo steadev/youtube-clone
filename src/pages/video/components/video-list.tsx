@@ -9,15 +9,24 @@ interface VideoListProps {
 
 export const VideoList = ({ youtube }: VideoListProps) => {
   const [videos, setVideos] = useState<any>([]);
+  const scrollRef: any = React.createRef<HTMLDivElement>();
+
+  let listLoading = false;
 
   const getPopularList = () => {
+    listLoading = true;
     youtube
       .mostPopular() //
-      .then((res) => setVideos([...videos, ...res]));
+      .then((res) => setVideos([...videos, ...res]))
+      .then(() => (listLoading = false))
+      .catch(() => (listLoading = false));
   };
 
   const onScroll = (event: any) => {
-    console.log(event);
+    const { scrollTop, scrollHeight } = scrollRef.current;
+    if (!listLoading && scrollHeight <= scrollTop * 2) {
+      getPopularList();
+    }
   };
 
   useEffect(() => {
@@ -25,7 +34,7 @@ export const VideoList = ({ youtube }: VideoListProps) => {
   }, []);
 
   return (
-    <div className={styles.videoList} onScroll={onScroll}>
+    <div ref={scrollRef} className={styles.videoList} onScroll={onScroll}>
       {videos.map((video: any) => {
         return (
           <VideoListItem

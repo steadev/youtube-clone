@@ -2,6 +2,7 @@ import axios from "axios";
 
 export class Youtube {
   private youtube;
+  private mostPopularPageToken: string | undefined;
   constructor(key: string) {
     this.youtube = axios.create({
       baseURL: "https://www.googleapis.com/youtube/v3",
@@ -16,8 +17,10 @@ export class Youtube {
         maxResults: 25,
         regionCode: "kr",
         chart: "mostPopular",
+        pageToken: this.mostPopularPageToken,
       },
     });
+    this.mostPopularPageToken = response.data.nextPageToken;
     return response?.data?.items ?? [];
   }
 

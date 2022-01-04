@@ -14,15 +14,22 @@ type VideoListItemProps = {
 
 const Popular = ({ youtube }: PopularProps) => {
   const [videos, setVideos] = useState<any>([]);
-
+  const scrollRef: any = React.createRef<HTMLDivElement>();
+  let listLoading = false;
   const getPopularList = () => {
+    listLoading = true;
     youtube
       .mostPopular() //
-      .then((res) => setVideos([...videos, ...res]));
+      .then((res) => setVideos([...videos, ...res]))
+      .then(() => (listLoading = false))
+      .catch(() => (listLoading = false));
   };
 
   const onScroll = (event: any) => {
-    console.log(event);
+    const { scrollTop, scrollHeight } = scrollRef.current;
+    if (!listLoading && scrollHeight <= scrollTop * 2) {
+      getPopularList();
+    }
   };
 
   useEffect(() => {
@@ -30,7 +37,7 @@ const Popular = ({ youtube }: PopularProps) => {
   }, []);
   return (
     <>
-      <div className={styles.list} onScroll={onScroll}>
+      <div ref={scrollRef} className={styles.list} onScroll={onScroll}>
         {videos.map((item: any) => {
           return (
             <VideoListItem
