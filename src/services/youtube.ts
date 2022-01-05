@@ -41,6 +41,6 @@ export class Youtube {
 
   getDate(data: string): string {
     const date = new Date(data);
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate() + 1}`;
   }
 }
