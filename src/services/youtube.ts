@@ -3,6 +3,8 @@ import axios from "axios";
 export class Youtube {
   private youtube;
   private mostPopularPageToken: string | undefined;
+  private videoList: any[] = [];
+
   constructor(key: string) {
     this.youtube = axios.create({
       baseURL: "https://www.googleapis.com/youtube/v3",
@@ -21,7 +23,9 @@ export class Youtube {
       },
     });
     this.mostPopularPageToken = response.data.nextPageToken;
-    return response?.data?.items ?? [];
+    const result = response?.data?.items ?? [];
+    this.videoList = [...this.videoList, ...result];
+    return result;
   }
 
   async search(query: string) {
@@ -33,10 +37,12 @@ export class Youtube {
         q: query,
       },
     });
-    return response?.data?.items.map((item: any) => ({
+    const result = response?.data?.items.map((item: any) => ({
       ...item,
       id: item.id.videoId,
     }));
+    this.videoList = [...this.videoList, ...result];
+    return result;
   }
 
   getDate(data: string): string {
